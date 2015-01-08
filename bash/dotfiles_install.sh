@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-directory="$HOME/dotfiles"
-backup_existing="$HOME/dotfiles_old"
+directory="$HOME/.dotfiles"
+backup_existing="$HOME/.dotfiles_old"
 
 files="bashrc vimrc bash_profile bash_functions"
 
