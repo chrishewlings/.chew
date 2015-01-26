@@ -4,13 +4,16 @@
 import os, sys, errno, subprocess
 
 newFileList = []
+rightEdge = os.environ['COLUMNS'] - 1
+subprocess.call('clear')
 
 # definitions
 def removeElementsNicely(list):
-	
+	list = unpackPaths(list)
 	for element in list:
 		try:
 			os.remove(element)
+			print("FOUND:" + element + "\033[32m[REMOVED √]\033[0m")
 		except OSError as e:
 			if e.errno == 2:
 				pass # fail silently and pass if file does not exist
@@ -24,6 +27,11 @@ def unpackPaths(fileList):
 	for value in fileList:
 		newFileList.append(os.path.expanduser(value))
 	return newFileList
+
+def warnUser(message):
+	choice = raw_input(message)
+	if choice != '':
+		sys.exit(1)
 
 
 def allDoneByeBye():
@@ -80,7 +88,34 @@ conduitFiles = ['/Library/InputManagers/CTLoader/',
 '~/Conduit/',
 '~/Trovi/']
 
-#spigotFiles = ['~/Library/Application Support/Spigot/']
-# need a wildcard for anything with slick savings, ebay shopping assistant, etc
+onlySearchFiles = ['/Library/Application Support/solar',
+'/Library/LaunchAgents/com.solar.agent.plist',
+'/Library/LaunchDaemons/com.solar.daemon.plist',
+'/System/Library/Frameworks/v.framework']
+
+fkCodecFiles = ['~/Library/Application Support/Codec-M',
+'~/Library/LaunchAgents/com.codecm.uploader.plist',
+'/Applications/Codec-M.app']
+
+chatZumFiles = ['/Applications/ChatZumUninstaller.pkg',
+'/Library/Application Support/SIMBL/Plugins/SafariOmnibar.bundle',
+'/Library/Internet Plug-Ins/uid.plist',
+'/Library/Internet Plug-Ins/zako.plugin']
+
+
+
+spigotFiles = ['~/Library/Application Support/Spigot/',
+'~/Library/Safari/Extensions/Amazon Shopping Assistant.safariextz',
+'~/Library/Safari/Extensions/Searchme.safariextz',
+'~/Library/Safari/Extensions/SlickSavings.safariextz']
+
+variousSafariExtensions = ['~/Library/Safari/Extensions/AS-1.0.safariextz',
+'~/Library/Safari/Extensions/searchExt.safariextz',
+'~/Library/Safari/Extensions/searchme.safariextz',
+'~/Library/Safari/Extensions/palmall-1-2.safariextz',
+'~/Library/Safari/Extensions/Omnibar-2.safariextz']
+
+warnUser("\033[07m\033[01m\033[31mThis is entirely unsupported and run at your own risk.\nIf any data loss occurs, the creator of this script bears no responsibility; legal, ethical, or otherwise.\033[0m\n\nThis script is designed to remove certain known malware/adware applications from \033[32mMac OS X\033[0m and \033[32mSafari,\033[0m respectively.\nCurrently no removal is performed for \033[32mGoogle Chrome, Firefox, or Opera.\033[0m\nPlease remove any suspect extensions from these applications manually.\n\n\033[04mPress any key to start the removal.\033[0m")
+removeElementsNicely(spigotFiles)
 
 # prompt the user to restart the system
