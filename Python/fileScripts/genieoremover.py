@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, errno, subprocess
+import os, sys, errno
+from subprocess import call
 
 newFileList = []
-rightEdge = os.environ['COLUMNS'] - 1
-subprocess.call('clear')
+call('clear')
+
 
 # definitions
 def removeElementsNicely(list):
@@ -13,12 +14,13 @@ def removeElementsNicely(list):
 	for element in list:
 		try:
 			os.remove(element)
-			print("FOUND:" + element + "\033[32m[REMOVED √]\033[0m")
+			print "%-7s %-55s %10s" % ("FOUND:", element, "\033[32m[REMOVED √]\033[0m")
 		except OSError as e:
 			if e.errno == 2:
 				pass # fail silently and pass if file does not exist
 			elif e.errno == 1:
 				os.rmdir(element) #fail silently and attmept to remove element if it a directory
+				print "%-7s %-55s %10s" % ("FOUND:", element, "\033[32m[REMOVED √]\033[0m")
 				pass
 
 def unpackPaths(fileList):
@@ -29,6 +31,7 @@ def unpackPaths(fileList):
 	return newFileList
 
 def warnUser(message):
+	call('clear')
 	choice = raw_input(message)
 	if choice != '':
 		sys.exit(1)
@@ -36,16 +39,16 @@ def warnUser(message):
 
 def allDoneByeBye():
 	raw_input("The script has finished executing.  Please close any important files and press any key to reboot the system. ")
-	subprocess.call(["shutdown","-r", "now"])
+	call(["shutdown","-r", "now"])
 	
 
 
 # ask for root privileges
-'''
+
 if os.geteuid() != 0:
 	print("\nThis script requires root privileges. Please run it preceded by sudo, and enter your administrator password when prompted. \n")
 	sys.exit(1)
-'''
+
 
 # define which files to remove, can be appended later if needed
 
@@ -102,9 +105,8 @@ chatZumFiles = ['/Applications/ChatZumUninstaller.pkg',
 '/Library/Internet Plug-Ins/uid.plist',
 '/Library/Internet Plug-Ins/zako.plugin']
 
-
-
 spigotFiles = ['~/Library/Application Support/Spigot/',
+'~/Library/Safari/Extensions/Ebay Shopping Assistant.safariextz',
 '~/Library/Safari/Extensions/Amazon Shopping Assistant.safariextz',
 '~/Library/Safari/Extensions/Searchme.safariextz',
 '~/Library/Safari/Extensions/SlickSavings.safariextz']
@@ -115,7 +117,12 @@ variousSafariExtensions = ['~/Library/Safari/Extensions/AS-1.0.safariextz',
 '~/Library/Safari/Extensions/palmall-1-2.safariextz',
 '~/Library/Safari/Extensions/Omnibar-2.safariextz']
 
-warnUser("\033[07m\033[01m\033[31mThis is entirely unsupported and run at your own risk.\nIf any data loss occurs, the creator of this script bears no responsibility; legal, ethical, or otherwise.\033[0m\n\nThis script is designed to remove certain known malware/adware applications from \033[32mMac OS X\033[0m and \033[32mSafari,\033[0m respectively.\nCurrently no removal is performed for \033[32mGoogle Chrome, Firefox, or Opera.\033[0m\nPlease remove any suspect extensions from these applications manually.\n\n\033[04mPress any key to start the removal.\033[0m")
-removeElementsNicely(spigotFiles)
+malwareArray = [genieoFiles, vsearchFiles, conduitFiles, onlySearchFiles, fkCodecFiles, chatZumFiles, spigotFiles, variousSafariExtensions]
 
+warnUser("\033[07m\033[01m\033[31mThis is entirely unsupported and run at your own risk.\nIf any data loss occurs, the creator of this script bears no responsibility;\n legal, ethical, or otherwise.\033[0m\n\nThis script is designed to remove certain known malware/adware applications from \033[32mMac OS X\033[0m and \033[32mSafari,\033[0m respectively.\nCurrently no removal is performed for \033[32mGoogle Chrome, Firefox, or Opera.\033[0m\nPlease remove any suspect extensions from these applications manually.\n\n\033[04mPress any key to start the removal.\033[0m")
+
+for element in malwareArray:
+	removeElementsNicely(element)
+
+allDoneByeBye()
 # prompt the user to restart the system
