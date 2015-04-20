@@ -8,6 +8,9 @@ from decimal import *
 subprocess.call("clear")
 
 getcontext().prec = 2
+peopleToSplit = {'Ola' : Decimal(0.00) , 'Chris' : Decimal(0.00), 'Both' : Decimal(0.00)}
+
+
 
 
 cashMoney = re.compile('|'.join([
@@ -54,4 +57,20 @@ def askForAmount():
 		else:
 			print "try again."
 
-askForAmount()
+def whoAlreadyPaid(billAmount):
+	choice = menu(peopleToSplit, "Who already paid this bill?")
+	for case in switch(choice):
+		if case('1'): #chris 
+			peopleToSplit('Ola') += (billAmount / 2)
+			break
+		if case('2'): # ola
+			peopleToSplit('Chris') += (billAmount / 2)
+			break
+		if case('3'): #both
+			pass
+			break
+		if case(''): #nothing
+			print("make a choice!")	
+			break
+#askForAmount() 
+whoAlreadyPaid(Decimal('164.50')
