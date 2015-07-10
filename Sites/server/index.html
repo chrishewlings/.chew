@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+<link rel="stylesheet" type="text/css" href="main.css">
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<title> RTW Calculator! </title>
+<head><h1>This is the landing page for the Excel RTW converter. 
+</h1></head>
+
+
+<body> 
+
+
+	<div class="centered">
+		<form action="/cgi-bin/upload.py" method="post" enctype="multipart/form-data">
+		<p><input type="file" id="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" autofocus align=center name="file"></p>
+		<p>Enter your email address: <input type="text" name="emailAddress"</p>
+		<p><input type="submit" name="Submit" value="Submit Form" /></p>
+		</form>
+	</div>
+</body>
+
+</html>
