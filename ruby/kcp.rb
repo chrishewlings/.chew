@@ -20,6 +20,10 @@ class String
         colorize(31)
     end
 
+    def magenta
+        colorize(35)
+    end
+
     def green
         colorize(32)
     end
