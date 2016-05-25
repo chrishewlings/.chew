@@ -74,6 +74,9 @@ int main(int argc, char *argv[]){
 		printf("Software lock is off.\n");
 	}
 	
+	if((attributes & isVolumeInconsistent) == 0){
+		printf("Volume was unmounted cleanly.");
+}
 
 	//printf("The raw value of thing is %x\n", Header_GeneralInfo.)
 	fclose(blockDevice);
